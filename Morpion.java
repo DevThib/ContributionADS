@@ -38,17 +38,13 @@ public class Morpion implements CommandExecutor {
 
             sendAcceptMessage(event.getChannel());
 
-            addAll();
+            for(int i = 0; i < 9; i++){
+                cases.put(i, Main.api.getYourself());
+            }
         } else {
             event.getMessage().toMessageBuilder().setContent("Veuillez mentionner quelqu'un").replyTo(event.getMessage()).send(event.getChannel());
         }
 
-    }
-
-    private void addAll(){
-        for(int i = 0; i < 9; i++){
-            cases.put(i, Main.api.getYourself());
-        }
     }
 
     private String getTable(boolean showTurn){
@@ -74,8 +70,7 @@ public class Morpion implements CommandExecutor {
             MessageBuilder messageBuilder = new MessageBuilder()
                     .setContent(user2.getMentionTag() + "," + user1.getMentionTag() + " souhaite faire un morpion avec vous ! L'accepter ?")
                     .addComponents(
-                            ActionRow.of(Button.success("valid", "", "✅")),
-                            ActionRow.of(Button.danger("unvalid", "", "❎")));
+                            ActionRow.of(Button.success("valid", "", "✅"),Button.danger("unvalid", "", "❎")));
 
             message = messageBuilder.send(channel).get();
             message.addButtonClickListener(event1 -> {
